@@ -26,3 +26,9 @@
 
 /// <reference types="Cypress" />
 require("cypress-xpath");
+
+Cypress.Commands.add("elementExists", (selector) => {
+  return cy
+    .window()
+    .then(($window) => $window.document.querySelector(selector));
+});
