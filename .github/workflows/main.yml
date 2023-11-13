@@ -17,5 +17,5 @@ jobs:
           start: npm start
           record: true
         env:
-          USER: ${{}}
-          PASSWORD: ${{}}
+          USER: ${{secrets.USER}}
+          PASSWORD: ${{secrets.PASSWORD}}
