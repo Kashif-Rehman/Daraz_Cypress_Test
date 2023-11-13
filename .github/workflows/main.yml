@@ -1,31 +1,21 @@
 name: Cypress Tests
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    env:
-      DARAZ_TEST_ENV: "true"
-
+  cypress-run:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set Up Node.js
-        uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
         with:
-          node-version: 20
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Set Environment Variables
-        run: echo "DARAZ_TEST_ENV=${{ env.DARAZ_TEST_ENV }}" >> $GITHUB_ENV
-
-      - name: Run Cypress Tests
-        run: npm cypress:open
+          build: npm run build
+          start: npm start
+        env:
+          
+          USER: ${{secrets.USER}}
+          PASSWORD: ${{secrets.PASSWORD}}
